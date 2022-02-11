@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div>
+       <h2>Books of the Library</h2>
+       <a href="/add_books" class="btn btn-sm btn-primary" style="margin-left:700px">
+        add a book
+       </a>
+    </div>
+       <table class="table table-hover table-dark">
+             <thead>
+                 <tr>
+                     <th scope="col">ID</th>
+                     <th scope="col">Name</th>
+                     <th scope="col">author</th>
+                     <th scope="col">quantity</th>
+                     <th scope="col">Book Rent</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for book in books %}
+                    <tr>
+                         <td>{{book.id}}</td>
+                         <td>{{book.book_name}}</td>
+                         <td>{{book.author}}</td>
+                         <td>{{book.quantity}}</td>
+                         <td>{{book.book_charge}}</td>
+                   </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+{% endblock content %}

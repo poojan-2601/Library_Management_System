@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+      <h2>Members of the Library</h2>
+     <table class="table table-hover table-dark">
+           <thead>
+               <tr>
+                   <!-- Your Columns HERE -->
+                   <th scope="col">ID</th>
+                   <th scope="col">Name</th>
+                   <th scope="col">email</th>
+                   <th scope="col">debt</th>
+               </tr>
+           </thead>
+           <tbody>
+               <!-- Your rows inside the table HERE: -->
+               {% for item in posts %}
+                  <tr>
+                       <td>{{item.memberid}}</td>
+                       <td>{{item.name}}</td>
+                       <td>{{item.email}}</td>
+                       <td>${{item.debt}}</td>
+                 </tr>
+               {% endfor %}
+           </tbody>
+       </table>
+       <h2>Transactions of the Library</h2>
+     <table class="table table-hover table-dark">
+           <thead>
+               <tr>
+                   <th scope ="col">Transaction id</th>
+                   <th scope="col"> Book ID</th>
+                   <th scope="col">Book name</th>
+                   <th scope="col"> Member ID</th>
+                   <th scope="col">Member name</th>
+                   <th scope="col">Book Charge</th>
+                   <th scope="col">Issue Date</th>
+                   <th scope="col">Return Date</th>
+                   <th scope="col">Total Charge</th>
+                   <th scope="col">Amount Paid</th>
+                   <th scope="col">Book Status</th>
+                   
+               </tr>
+           </thead>
+           <tbody>
+               {% for item in transaction %}
+                  <tr>
+                        <td>{{item.transaction_id}}</td>
+                       <td>{{item.book_id}}</td>
+                       <td>{{item.book_name}}</td>
+                       <td>{{item.member_id}}</td>
+                       <td>{{item.member_name}}</td>
+                       <td>{{item.per_day_fees}}</td>
+                       <td>{{item.issue_date}}</td>
+                       <td>{{ item.return_date }}</td>
+                        <td>{{ item.total_charge }}</td>
+                        <td>{{ item.amount_paid }}</td>
+                        <td>
+                            {% if item.book_status==True %}
+                                Returned
+                            {% else %}
+                                <a href="/Return_Book" class="btn btn-sm btn-danger mx-1">
+                                    Return
+                                </a>
+                            {% endif %}
+                        </td>
+                 </tr>
+               {% endfor %}
+           </tbody>
+       </table>
+{% endblock content %}
