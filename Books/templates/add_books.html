@@ -4,7 +4,7 @@
         <form method="POST" action="">
             {{ book_data.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
+                <legend class="border-bottom mb-4">Library Expansion</legend>
                 <div class="form-group">
                     {{ book_data.bookname.label(class="form-control-label") }}
 
@@ -63,4 +63,8 @@
                 {{ book_data.submit(class="btn btn-outline-info") }}
             </div>
         </form>
+    </div>
+    <a href="/Increase_Quantity" class="btn btn-sm btn-primary">
+        Add an existing book
+       </a>
 {% endblock content %}

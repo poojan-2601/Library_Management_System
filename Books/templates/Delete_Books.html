@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block content %}
+<div class="content-section">
+  <form method="POST" action="">
+    {{ book_information.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Delete Book</legend>
+      <div class="form-group">
+        {{ book_information.book_id.label(class="form-control-label") }} {% if
+        book_information.book_id.errors %} {{
+        book_information.book_id(class="form-control form-control-lg
+        is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in book_information.book_id.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ book_information.book_id(class="form-control
+        form-control-lg") }} {% endif %}
+      </div>
+    </fieldset>
+    <div class="form-group">
+      {{ book_information.submit(class="btn btn-outline-info") }}
+    </div>
+  </form>
+</div>
+{% endblock content %}

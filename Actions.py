@@ -25,5 +25,17 @@ class Issue_Book_Form(FlaskForm):
 class Return_Book_Form(FlaskForm):
     transaction_id = IntegerField('Transaction id',validators=[DataRequired(),NumberRange(min=1)])
     amount_paid = IntegerField('Amount',validators=[DataRequired(),NumberRange(min=1)])
-    submit = SubmitField('Issue Book')
+    submit = SubmitField('Return Book')
 
+class IncreaseQuantity(FlaskForm):
+    book_id = IntegerField('Book ID',validators=[DataRequired()])
+    quantity = IntegerField('Quantity',validators=[DataRequired(),NumberRange(min = 1,max = 50)])
+    submit = SubmitField('Add Books')
+
+class DeleteBook(FlaskForm):
+    book_id = IntegerField('Book ID',validators=[DataRequired()])
+    submit = SubmitField('Delete Books')
+
+class DeleteMember(FlaskForm):
+    member_id = IntegerField('Member ID',validators=[DataRequired()])
+    submit = SubmitField('Remove Member')

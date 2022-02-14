@@ -1,18 +1,18 @@
 from crypt import methods
 from flask import Flask, render_template, url_for,flash,redirect
+from sqlalchemy import null
 from Books import models,db,app
 from random import randint
 from datetime import date
 import requests
-from Actions import RegistrationForm,AddBooks,Issue_Book_Form,Return_Book_Form
+from Actions import RegistrationForm,AddBooks,Issue_Book_Form,Return_Book_Form,IncreaseQuantity,DeleteBook,DeleteMember
 
 
 @app.route("/")
 @app.route("/home")
 def home():
-    member_data = models.Member.query.all()
     transaction_details = models.Transaction.query.all()
-    return render_template('home.html',posts = member_data,transaction = transaction_details)
+    return render_template('home.html',transaction = transaction_details)
 
 
 @app.route("/library")
@@ -20,6 +20,12 @@ def library():
     book_data = models.Book.query.all()
     transcation_data = models.Transaction.query.all()
     return render_template('library.html',title='library',books = book_data,transcation_data = transcation_data)
+
+@app.route("/Members")
+def Members():
+    member_data = models.Member.query.all()
+    return render_template('Members.html',title='Members',member_data = member_data)
+
 
 @app.route("/register",methods = ['GET','POST'])
 def register():
@@ -93,4 +99,54 @@ def add_books():
         flash(f'Book added successfully!!!!','success')
         return redirect(url_for('library'))
     return render_template('add_books.html', title='add_books',book_data = book_data)
+
+@app.route("/Increase_Quantity",methods = ["GET","POST"])
+def Increase_Quantity():
+    book_information = IncreaseQuantity()
+    if book_information.validate_on_submit():
+        book = models.Book.query.filter_by(id = book_information.book_id.data).first()
+        if book != None:
+            book.quantity = book.quantity + book_information.quantity.data
+            db.session.commit()
+            flash(f'{book_information.quantity.data} added to {book.book_name}','success')
+            return redirect(url_for('library'))
+        else:
+            flash(f'Please enter a valid book ID!!!!!','failure')
+            return redirect(url_for('Increase_Quantity'))
+    return render_template('Increase_Quantity.html',title = 'Increase Quantity',book_information = book_information)
+
+@app.route("/Delete_Books",methods = ["GET","POST"])
+def Delete_Books():
+    book_information = DeleteBook()
+    if book_information.validate_on_submit():
+        book = models.Book.query.filter_by(id = book_information.book_id.data).first()
+        book_name = book.book_name
+        if book != None:
+            db.session.delete(book)
+            db.session.commit()
+            flash(f'{book_name} Deleted from Library','success')
+            return redirect(url_for('library'))
+        else:
+            flash(f'Please enter a valid book ID!!!!!','failure')
+            return redirect(url_for('Delete_Books'))
+    return render_template('Delete_Books.html',title = 'Delete Books',book_information = book_information)
+
+@app.route("/Delete_Member",methods = ["GET","POST"])
+def Delete_Member():
+    member_info = DeleteMember()
+    if member_info.validate_on_submit():
+        member = models.Member.query.filter_by(memberid = member_info.member_id.data).first()
+        member_name = member.name
+        if member != None:
+            db.session.delete(member)
+            db.session.commit()
+            flash(f'{member_name} Removed from Library','success')
+            return redirect(url_for('Members'))
+        else:
+            flash(f'Please enter a valid member ID!!!!!','failure')
+            return redirect(url_for('Delete_Member'))
+    return render_template('Delete_Member.html',title = 'Delete Member',member_info = member_info
+    )
+
+
 

@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block content %}
+<div class="content-section">
+  <form method="POST" action="">
+    {{ member_info.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Remove Member</legend>
+      <div class="form-group">
+        {{ member_info.member_id.label(class="form-control-label") }} {% if
+        member_info.member_id.errors %} {{
+        member_info.member_id(class="form-control form-control-lg
+        is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in member_info.member_id.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ member_info.member_id(class="form-control
+        form-control-lg") }} {% endif %}
+      </div>
+    </fieldset>
+    <div class="form-group">
+      {{ member_info.submit(class="btn btn-outline-info") }}
+    </div>
+  </form>
+</div>
+{% endblock content %}

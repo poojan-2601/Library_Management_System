@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+      <h2>Members of the Library</h2>
+      <a href="/register" class="btn btn-sm btn-primary">
+        add a Member
+    </a>
+       <a href="/Delete_Member" class="btn btn-sm btn-danger">
+        delete a Member
+       </a>
+     <table class="table table-hover table-dark">
+           <thead>
+               <tr>
+                   <!-- Your Columns HERE -->
+                   <th scope="col">ID</th>
+                   <th scope="col">Name</th>
+                   <th scope="col">email</th>
+                   <th scope="col">debt</th>
+               </tr>
+           </thead>
+           <tbody>
+               <!-- Your rows inside the table HERE: -->
+               {% for item in member_data %}
+                  <tr>
+                       <td>{{item.memberid}}</td>
+                       <td>{{item.name}}</td>
+                       <td>{{item.email}}</td>
+                       <td>${{item.debt}}</td>
+                 </tr>
+               {% endfor %}
+           </tbody>
+       </table>
+{% endblock content %}
