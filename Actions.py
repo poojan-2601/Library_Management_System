@@ -23,7 +23,6 @@ class Issue_Book_Form(FlaskForm):
     submit = SubmitField('Issue Book')
 
 class Return_Book_Form(FlaskForm):
-    transaction_id = IntegerField('Transaction id',validators=[DataRequired(),NumberRange(min=1)])
     amount_paid = IntegerField('Amount',validators=[DataRequired(),NumberRange(min=1)])
     submit = SubmitField('Return Book')
 
