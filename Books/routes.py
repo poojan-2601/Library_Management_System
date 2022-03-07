@@ -123,16 +123,16 @@ def Delete_Books():
         if book != None:
             book_name = book.book_name
             book_id = book.id
-            transaction = models.Transaction.query.filter_by(book_id = book_id).first()
+            transaction = models.Transaction.query.filter_by(book_id = book_id).all()
             if transaction:
-                print(transaction.book_status)
-                if transaction.book_status == True:
-                    db.session.delete(book)
-                    db.session.commit()
-                    return redirect(url_for('library'))
-                else:
-                    flash(f'This book is currently issued by {transaction.member_name}, kindly wait for them to return the book','danger')
-                    return redirect(url_for('Delete_Books'))
+                for i in transaction:
+                    if i.book_status == False:
+                        flash(f'This book is currently issued by {i.member_name}, kindly wait for them to return the book','danger')
+                        return redirect(url_for('Delete_Books'))
+                
+                db.session.delete(book)
+                db.session.commit()
+                return redirect(url_for('library'))
             else:
                 db.session.delete(book)
                 db.session.commit()
